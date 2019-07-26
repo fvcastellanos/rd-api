@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ApplicationRepositoryIT extends BaseRepositoryIT {
+public class ApplicationRepositoryTest extends BaseRepositoryIT {
 
     @Autowired
     private ApplicationRepository applicationRepository;

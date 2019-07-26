@@ -1,21 +1,16 @@
 package com.dorefactor.deployer.configuration;
 
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoClients;
+import com.mongodb.client.MongoClient;
 
-import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
-import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
-@EnableReactiveMongoRepositories
-public class MongoDeployerConfig extends AbstractReactiveMongoConfiguration {
-
-    @Override
-    public MongoClient reactiveMongoClient() {
-        return MongoClients.create("connectionString");
+public class MongoDeployerConfig {
+    
+    @Bean
+    public MongoOperations mongoOperations(MongoClient mongoClient) {
+        
+        return new MongoTemplate(mongoClient, "blah");
     }
-
-    @Override
-    protected String getDatabaseName() {
-		return "regularApiDb";
-	}
 }
