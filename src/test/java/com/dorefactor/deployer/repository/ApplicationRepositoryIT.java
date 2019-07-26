@@ -13,8 +13,8 @@ public class ApplicationRepositoryIT extends BaseRepositoryIT {
     @Test
     public void testGetAll() {
 
-        var appsFlux = applicationRepository.getAll();
+        var apps = applicationRepository.getAll();
 
-        assertNotNull(appsFlux);
+        assertNotNull(apps);
     }
 }

@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.dorefactor.deployer.repository.model.Application;
 
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.MongoOperations;
 
 public class ApplicationRepository {
 
-    private final MongoTemplate mongoTemplate;
+    private final MongoOperations mongoTemplate;
 
-    public ApplicationRepository(MongoTemplate mongoTemplate) {
+    public ApplicationRepository(MongoOperations mongoTemplate) {
 
         this.mongoTemplate = mongoTemplate;
     }

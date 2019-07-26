@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-    MongoDbConfig.class,
-    RepositoryConfig.class
+    // MongoDbConfig.class,
+    // RepositoryConfig.class
 })
 public class BaseRepositoryITConfig {
 

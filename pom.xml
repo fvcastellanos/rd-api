@@ -59,16 +59,16 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <version>${embedmongo-flapdoodle.version}</version>
+            <!-- <version>${embedmongo-flapdoodle.version}</version> -->
 			<!-- <type>bundle</type> -->
 			<scope>test</scope>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>cz.jirutka.spring</groupId>
             <artifactId>embedmongo-spring</artifactId>
             <version>${embedmongo-spring.version}</version>
-        </dependency>
+        </dependency> -->
 
 	</dependencies>
 
