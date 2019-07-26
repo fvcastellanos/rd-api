@@ -1,17 +1,17 @@
 package com.dorefactor.deployer.configuration;
 
-import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.client.MongoClient;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
 public class RepositoryConfig {
 
     @Bean
-    public ReactiveMongoTemplate reactiveMongoTemplate(MongoClient mongoClient) {
+    public MongoTemplate mongoTemplate(MongoClient mongoClient) {
         
-        return new ReactiveMongoTemplate(mongoClient, "blah");
+        return new MongoTemplate(mongoClient, "blah");
     }
 }
