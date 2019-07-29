@@ -17,6 +17,10 @@
 	<properties>
 		<java.version>11</java.version>
 
+		<commons-lang3.version>3.9</commons-lang3.version>
+		<guava.version>28.0-jre</guava.version>
+		<lombok.version>1.18.8</lombok.version>
+		<vavr.version>0.10.1</vavr.version>
 	</properties>
 
 	<dependencies>
@@ -44,19 +48,25 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
+			<version>${lombok.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.0-jre</version>
+			<version>${guava.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.9</version>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>${vavr.version}</version>
 		</dependency>
 
 		<!-- Tests -->
