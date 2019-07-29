@@ -7,6 +7,8 @@ import com.dorefactor.deployer.dao.model.DeploymentTemplate;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 public class DeploymentTemplateMongoDao extends BaseDao implements DeploymentTemplateDao {
 
@@ -22,18 +24,22 @@ public class DeploymentTemplateMongoDao extends BaseDao implements DeploymentTem
 
     @Override
     public DeploymentTemplate save(DeploymentTemplate deploymentTemplate) {
-        return null;
+
+        return mongoTemplate.save(deploymentTemplate);
     }
 
     @Override
     public Optional<DeploymentTemplate> getByName(String name) {
-		return null;
+
+        var query = Query.query(Criteria.where("name").is(name));
+        var deploymentTemplate = mongoTemplate.findOne(query, DeploymentTemplate.class);
+		return Optional.ofNullable(deploymentTemplate);
 	}
 
 	@Override
 	public Optional<DeploymentTemplate> getById(ObjectId id) {
-		return null;
+        
+        var deploymentTemplate = mongoTemplate.findById(id, DeploymentTemplate.class);
+		return Optional.ofNullable(deploymentTemplate);
 	}
-
-
 }

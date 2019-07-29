@@ -7,7 +7,6 @@ import com.dorefactor.deployer.dao.model.Application;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 
 public class ApplicationMongoDao extends BaseDao implements ApplicationDao {
