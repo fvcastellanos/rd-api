@@ -2,6 +2,8 @@ package com.dorefactor.deployer.configuration;
 
 import com.dorefactor.deployer.dao.ApplicationDao;
 import com.dorefactor.deployer.dao.ApplicationMongoDao;
+import com.dorefactor.deployer.dao.DeploymentOrderDao;
+import com.dorefactor.deployer.dao.DeploymentOrderMongoDao;
 import com.dorefactor.deployer.dao.DeploymentTemplateDao;
 import com.dorefactor.deployer.dao.DeploymentTemplateMongoDao;
 
@@ -22,5 +24,11 @@ public class DaoConfig {
     public DeploymentTemplateDao deploymentTemplateDao(MongoOperations mongoOperations) {
 
         return new DeploymentTemplateMongoDao(mongoOperations);
+    }
+
+    @Bean
+    public DeploymentOrderDao deploymentOrderDao(MongoOperations mongoOperations) {
+
+        return new DeploymentOrderMongoDao(mongoOperations);
     }
 }

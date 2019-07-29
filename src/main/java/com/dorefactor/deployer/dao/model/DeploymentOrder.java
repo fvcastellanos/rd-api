@@ -19,7 +19,7 @@ public class DeploymentOrder {
     private ObjectId id;
     private String requestId;
     private LocalDateTime createdAt;
-    private ObjectId deploymentTemplateId;
+    private DeploymentTemplate deploymentTemplate;
     private Application application;
-    public List<HostSetup> hostsSetup;
+    private List<HostSetup> hostsSetup;
 }

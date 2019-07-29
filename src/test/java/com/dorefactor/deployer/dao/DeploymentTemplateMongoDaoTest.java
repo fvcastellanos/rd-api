@@ -6,6 +6,7 @@ import com.dorefactor.deployer.dao.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,14 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
+    public void testGetByNameNotFound() {
+
+        var template = deploymentTemplateDao.getByName("something");
+
+        assertThat(template).isEmpty();
+    }
+
+    @Test
     public void testGetById() {
 
         var storedTemplate = saveRandomDeploymentTemplate();
@@ -54,6 +63,16 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
         assertThat(expectedTemplate).get()
             .isEqualTo(storedTemplate);
     }
+
+    @Test
+    public void testGetByIdNotFound() {
+
+        var id = ModelFixture.buildRandomObjectId();
+        var template = deploymentTemplateDao.getById(id);
+
+        assertThat(template).isEmpty();
+    }
+
     // --------------------------------------------------------------------------------
 
     private DeploymentTemplate saveRandomDeploymentTemplate() {

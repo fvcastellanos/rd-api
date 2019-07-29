@@ -24,9 +24,8 @@ public class DeploymentOrderMongoDao extends BaseDao implements DeploymentOrderD
 	public Optional<DeploymentOrder> getByRequestId(String requestId) {
 
         var query = Query.query(Criteria.where("requestId").is(requestId));
+        var result = mongoTemplate.findOne(query, DeploymentOrder.class);
 
-        mongoTemplate.findOne(query, DeploymentOrder.class);
-
-        return null;
+        return Optional.ofNullable(result);
 	}
 }
