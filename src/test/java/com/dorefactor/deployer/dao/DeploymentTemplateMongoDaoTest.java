@@ -6,7 +6,6 @@ import com.dorefactor.deployer.dao.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
