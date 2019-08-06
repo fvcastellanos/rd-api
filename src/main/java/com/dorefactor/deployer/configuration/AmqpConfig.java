@@ -1,7 +1,6 @@
 package com.dorefactor.deployer.configuration;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils;
 import org.springframework.amqp.rabbit.connection.RabbitConnectionFactoryBean;
 import org.springframework.amqp.rabbit.core.RabbitOperations;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -12,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmqpConfig {
 
-    @Value("${spring.rabbitmq.host:rabbitmq-host}")
+    @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
 
-    @Value("${spring.rabbitmq.username:guest}")
+    @Value("${spring.rabbitmq.username}")
     private String rabbitUser;
 
-    @Value("${spring.rabbitmq.password:guest}")
+    @Value("${spring.rabbitmq.password}")
     private String rabbitPassword;
 
-    @Value("${spring.rabbitmq.port:5672}")
+    @Value("${spring.rabbitmq.port}")
     private Integer rabbitPort;
 
     @Bean
