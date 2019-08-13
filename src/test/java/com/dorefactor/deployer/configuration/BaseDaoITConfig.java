@@ -1,6 +1,4 @@
-package com.dorefactor.deployer.dao.configuration;
-
-import com.dorefactor.deployer.configuration.DaoConfig;
+package com.dorefactor.deployer.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

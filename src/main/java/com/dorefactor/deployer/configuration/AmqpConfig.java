@@ -21,7 +21,7 @@ public class AmqpConfig {
     private String rabbitPassword;
 
     @Value("${spring.rabbitmq.port}")
-    private Integer rabbitPort;
+    private String rabbitPort;
 
     @Bean
     public RabbitConnectionFactoryBean connectionFactory() {
@@ -30,7 +30,7 @@ public class AmqpConfig {
         factory.setHost(rabbitHost);
         factory.setUsername(rabbitUser);
         factory.setPassword(rabbitPassword);
-        factory.setPort(rabbitPort);
+        factory.setPort(Integer.parseInt(rabbitPort));
 
         return factory;
     }
