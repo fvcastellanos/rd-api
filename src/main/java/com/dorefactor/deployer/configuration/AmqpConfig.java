@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmqpConfig {
 
-    @Value("${spring.rabbitmq.host}")
+    @Value("${spring.rabbitmq.host:rabbitmq-host}")
     private String rabbitHost;
 
-    @Value("${spring.rabbitmq.username}")
+    @Value("${spring.rabbitmq.username:guest}")
     private String rabbitUser;
 
-    @Value("${spring.rabbitmq.password}")
+    @Value("${spring.rabbitmq.password:guest}")
     private String rabbitPassword;
 
-    @Value("${spring.rabbitmq.port}")
+    @Value("${spring.rabbitmq.port:5672}")
     private String rabbitPort;
 
     @Bean

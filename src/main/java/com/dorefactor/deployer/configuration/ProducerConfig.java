@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProducerConfig {
 
-    @Value("${rd.api.rabbitmq.exchange}")
+    @Value("${rd.api.rabbitmq.exchange:regular-deployer-exchange}")
     private String exchange;
 
-    @Value("${rd.api.rabbitmq.routing.key}")
+    @Value("${rd.api.rabbitmq.routing.key:com.dorefactor.deploy.command}")
     private String routingKey;
 
     @Bean
