@@ -1,15 +1,15 @@
 package com.dorefactor.deployer.configuration;
 
 import com.dorefactor.deployer.fixture.listener.RabbitListenerFixture;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-    ProducerConfig.class,
-    ProducerConfigIT.TestConfig.class
+        AmqpConfig.class,
+        ProducerConfig.class,
+        ProducerConfigIT.TestConfig.class
 })
 public class ProducerConfigIT {
 
