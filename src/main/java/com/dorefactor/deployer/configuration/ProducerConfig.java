@@ -4,10 +4,13 @@ import com.dorefactor.deployer.message.DeploymentOrderProducer;
 import com.dorefactor.deployer.message.DeploymentOrderRabbitMqProducer;
 import org.springframework.amqp.rabbit.core.RabbitOperations;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
+@Import(RabbitAutoConfiguration.class)
 public class ProducerConfig {
 
     @Value("${rd.api.rabbitmq.exchange:regular-deployer-exchange}")

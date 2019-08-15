@@ -6,7 +6,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-//@EnableAutoConfiguration
 @ContextConfiguration(classes = ProducerConfigIT.class)
 public abstract class BaseProducerIT {
 }

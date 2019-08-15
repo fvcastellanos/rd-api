@@ -1,9 +1,12 @@
 package com.dorefactor.deployer.configuration;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.RabbitConnectionFactoryBean;
-import org.springframework.amqp.rabbit.core.RabbitOperations;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,33 +14,30 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmqpConfig {
 
-    @Value("${spring.rabbitmq.host:rabbitmq-host}")
-    private String rabbitHost;
+    @Value("${rd.api.rabbitmq.exchange}")
+    private String exchangeName;
 
-    @Value("${spring.rabbitmq.username:guest}")
-    private String rabbitUser;
-
-    @Value("${spring.rabbitmq.password:guest}")
-    private String rabbitPassword;
-
-    @Value("${spring.rabbitmq.port:5672}")
-    private String rabbitPort;
+    @Value("${rd.api.rabbitmq.queue}")
+    private String queueName;
 
     @Bean
-    public RabbitConnectionFactoryBean connectionFactory() {
+    public Exchange exchange() {
 
-        var factory = new RabbitConnectionFactoryBean();
-        factory.setHost(rabbitHost);
-        factory.setUsername(rabbitUser);
-        factory.setPassword(rabbitPassword);
-        factory.setPort(Integer.parseInt(rabbitPort));
-
-        return factory;
+        return ExchangeBuilder.directExchange(exchangeName)
+            .build();
     }
 
     @Bean
-    public RabbitOperations rabbitOperations(ConnectionFactory connectionFactory) {
+    public Queue commandQueue() {
 
-        return new RabbitTemplate(connectionFactory);
+        return new Queue(queueName, true);
     }
+
+    @Bean
+    public Binding binding(Queue queue, Exchange exchange) {
+
+        return new BindingBuilder.bind(queue)
+            .to(exchange);
+    }
+
 }
