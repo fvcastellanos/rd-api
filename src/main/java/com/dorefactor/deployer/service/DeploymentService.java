@@ -1,12 +1,14 @@
 package com.dorefactor.deployer.service;
 
 import com.dorefactor.deployer.domain.model.DeploymentTemplate;
+import com.dorefactor.deployer.domain.model.Host;
 import com.dorefactor.deployer.domain.model.HostSetup;
 import com.dorefactor.deployer.domain.service.DeploymentHost;
 import com.dorefactor.deployer.message.DeploymentOrderProducer;
 import com.dorefactor.deployer.domain.service.DeploymentRequest;
 import com.dorefactor.deployer.domain.error.Error;
 import com.dorefactor.deployer.domain.error.ServiceError;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.slf4j.LoggerFactory;
 
@@ -89,7 +91,43 @@ public class DeploymentService {
         return deploymentOrder;
     }
 
+    private static List<DeploymentHost> getMatchingHostsByTag(List<DeploymentHost> hosts, List<HostSetup> hostsSetup) {
+
+        return hosts.stream().filter(host ->
+                hostsSetup.stream()
+                        .map(HostSetup::getTag)
+                        .anyMatch(host.getTag()::equals)
+        ).collect(Collectors.toList());
+    }
+
+    private static List<Host> findHostsByTagAndName(String tag, String name, List<HostSetup> hostSetups) {
+
+        return hostSetups.stream().filter(hostSetup -> hostSetup.getTag().equals(tag))
+                .flatMap(hostSetup -> hostSetup.getHosts().stream())
+                .filter(host -> host.getIp().equals(name))
+                .collect(Collectors.toList());
+    }
+
     private static List<HostSetup> buildHostSetupList(List<DeploymentHost> hosts, List<HostSetup> hostsSetup) {
+
+        var matchingDeploymentHosts = getMatchingHostsByTag(hosts, hostsSetup);
+
+        List<HostSetup> hostSetupList = Lists.newArrayList();
+
+        matchingDeploymentHosts.forEach(host -> {
+            var setup = new HostSetup();
+            setup.setTag();
+        });
+
+        matchingHostsSetup.forEach(hostSetup -> {
+            var setup = new HostSetup();
+            setup.setTag(hostSetup.getTag());
+            setup.setHosts(findHostsByTagAndName(hostSetup.getTag(), ));
+        });
+
+        hosts.stream().filter(host -> hostsSetup.stream().map(HostSetup::getTag)
+                    .anyMatch(tag -> host.equals(tag)))
+                .collect(Collectors.toList());
 
 //        hosts.stream()
 
@@ -100,5 +138,13 @@ public class DeploymentService {
         }).collect(Collectors.toList());
 
         return null;
+    }
+
+
+
+    private static List<Host> getHostsThatMatchHostName(String hostName, List<Host> hosts) {
+
+        return hosts.stream().filter(host -> hostName.equals(host.getIp()))
+                .collect(Collectors.toList());
     }
 }
