@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.configuration;
+package com.dorefactor.deployer.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

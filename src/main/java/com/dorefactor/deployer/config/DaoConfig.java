@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.configuration;
+package com.dorefactor.deployer.config;
 
 import com.dorefactor.deployer.dao.ApplicationDao;
 import com.dorefactor.deployer.dao.ApplicationMongoDao;

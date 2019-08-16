@@ -1,7 +1,7 @@
 package com.dorefactor.deployer.dao;
 
-import com.dorefactor.deployer.configuration.MongoDbConfig;
-import com.dorefactor.deployer.configuration.BaseDaoITConfig;
+import com.dorefactor.deployer.config.MongoDbConfig;
+import com.dorefactor.deployer.config.BaseDaoITConfig;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

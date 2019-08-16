@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.configuration;
+package com.dorefactor.deployer.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
