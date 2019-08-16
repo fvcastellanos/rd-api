@@ -1,13 +1,13 @@
 package com.dorefactor.deployer.service;
 
-import static com.dorefactor.deployer.service.model.ServiceError.APPLICATION_ALREADY_EXITS;
-import static com.dorefactor.deployer.service.model.ServiceError.ERROR_PROCESSING;
+import static com.dorefactor.deployer.domain.error.ServiceError.APPLICATION_ALREADY_EXITS;
+import static com.dorefactor.deployer.domain.error.ServiceError.ERROR_PROCESSING;
 
 import java.util.List;
 
 import com.dorefactor.deployer.dao.ApplicationDao;
-import com.dorefactor.deployer.dao.model.Application;
-import com.dorefactor.deployer.service.model.Error;
+import com.dorefactor.deployer.domain.model.Application;
+import com.dorefactor.deployer.domain.error.Error;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

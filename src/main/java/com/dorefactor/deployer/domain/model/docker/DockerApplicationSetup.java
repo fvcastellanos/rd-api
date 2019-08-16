@@ -1,8 +1,8 @@
-package com.dorefactor.deployer.dao.model.docker;
+package com.dorefactor.deployer.domain.model.docker;
 
 import java.util.Map;
 
-import com.dorefactor.deployer.dao.model.ApplicationSetup;
+import com.dorefactor.deployer.domain.model.ApplicationSetup;
 
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 

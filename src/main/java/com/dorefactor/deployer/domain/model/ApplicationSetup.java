@@ -1,6 +1,4 @@
-package com.dorefactor.deployer.dao.model;
-
-import java.util.List;
+package com.dorefactor.deployer.domain.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,8 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class HostSetup {
+public abstract class ApplicationSetup {
 
-    private String tag;
-    private List<Host> hosts;
+    private ApplicationType applicationType;
 }

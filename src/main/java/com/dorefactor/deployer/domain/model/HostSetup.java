@@ -1,4 +1,6 @@
-package com.dorefactor.deployer.dao.model.docker;
+package com.dorefactor.deployer.domain.model;
+
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,8 +11,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Image {
+public class HostSetup {
 
-    private String name;
     private String tag;
+    private List<Host> hosts;
 }

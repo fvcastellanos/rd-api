@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.dao.model;
+package com.dorefactor.deployer.domain.model;
 
 import lombok.Getter;
 

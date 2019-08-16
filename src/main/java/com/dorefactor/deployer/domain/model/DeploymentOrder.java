@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.dao.model;
+package com.dorefactor.deployer.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DeploymentOrder {
 
     private ObjectId id;
+    private String version;
     private String requestId;
     private LocalDateTime createdAt;
     private DeploymentTemplate deploymentTemplate;

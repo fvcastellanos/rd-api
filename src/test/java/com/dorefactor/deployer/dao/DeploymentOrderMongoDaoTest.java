@@ -2,7 +2,7 @@ package com.dorefactor.deployer.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dorefactor.deployer.dao.model.DeploymentOrder;
+import com.dorefactor.deployer.domain.model.DeploymentOrder;
 import com.dorefactor.deployer.fixture.ModelFixture;
 
 import org.bson.types.ObjectId;

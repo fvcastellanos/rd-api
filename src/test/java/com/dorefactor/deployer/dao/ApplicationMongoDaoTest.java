@@ -2,7 +2,7 @@ package com.dorefactor.deployer.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dorefactor.deployer.dao.model.Application;
+import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
 

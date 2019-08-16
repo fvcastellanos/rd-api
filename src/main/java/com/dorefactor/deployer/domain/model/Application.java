@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.dao.model;
+package com.dorefactor.deployer.domain.model;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;

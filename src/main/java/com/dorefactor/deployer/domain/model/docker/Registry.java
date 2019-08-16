@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.dao.model;
+package com.dorefactor.deployer.domain.model.docker;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,9 +9,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Host {
+public class Registry {
 
-    private String ip;
+    private boolean nonPublic;
+    private String url;
     private String username;
     private String password;
 }

@@ -2,7 +2,7 @@ package com.dorefactor.deployer.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dorefactor.deployer.dao.model.DeploymentTemplate;
+import com.dorefactor.deployer.domain.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
 
@@ -28,7 +28,7 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
     @Test
     public void testSave() {
 
-        var deploymentTemplate = ModelFixture.builDeploymentTemplate();
+        var deploymentTemplate = ModelFixture.buildDeploymentTemplate();
         var storedTemplate = deploymentTemplateDao.save(deploymentTemplate);
         var expectedTemplate = getById(storedTemplate.getId());
 
@@ -76,7 +76,7 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
 
     private DeploymentTemplate saveRandomDeploymentTemplate() {
 
-        var template = ModelFixture.builDeploymentTemplate();
+        var template = ModelFixture.buildDeploymentTemplate();
 
         return mongoTemplate.save(template);        
     }

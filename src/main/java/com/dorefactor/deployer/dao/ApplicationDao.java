@@ -3,7 +3,7 @@ package com.dorefactor.deployer.dao;
 import java.util.List;
 import java.util.Optional;
 
-import com.dorefactor.deployer.dao.model.Application;
+import com.dorefactor.deployer.domain.model.Application;
 
 public interface ApplicationDao {
 

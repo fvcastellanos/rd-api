@@ -1,13 +1,17 @@
 package com.dorefactor.deployer.fixture;
 
-import com.dorefactor.deployer.dao.model.Application;
-import com.dorefactor.deployer.dao.model.ApplicationType;
-import com.dorefactor.deployer.dao.model.DeploymentOrder;
-import com.dorefactor.deployer.dao.model.DeploymentTemplate;
-import com.dorefactor.deployer.dao.model.docker.DockerApplicationSetup;
+import com.dorefactor.deployer.domain.model.Application;
+import com.dorefactor.deployer.domain.model.ApplicationType;
+import com.dorefactor.deployer.domain.model.DeploymentOrder;
+import com.dorefactor.deployer.domain.model.DeploymentTemplate;
+import com.dorefactor.deployer.domain.model.Host;
+import com.dorefactor.deployer.domain.model.HostSetup;
+import com.dorefactor.deployer.domain.model.docker.DockerApplicationSetup;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.types.ObjectId;
+
+import java.util.Collections;
 
 public class ModelFixture {
 
@@ -28,11 +32,12 @@ public class ModelFixture {
         return application;
     }
 
-    public static DeploymentTemplate builDeploymentTemplate() {
+    public static DeploymentTemplate buildDeploymentTemplate() {
 
         var template = new DeploymentTemplate();
         template.setName(buildRandomName());
         template.setApplication(buildDockerApplication());
+        template.setHostsSetup(Collections.singletonList(buildHostSetup()));
 
         return template;
     }
@@ -42,12 +47,13 @@ public class ModelFixture {
         var app = buildDockerApplication();
         app.setId(buildRandomObjectId());
 
-        var template = builDeploymentTemplate();
+        var template = buildDeploymentTemplate();
         template.setId(buildRandomObjectId());
 
         var order = new DeploymentOrder();
         order.setApplication(app);
         order.setDeploymentTemplate(template);
+        order.setVersion("1.1.1");
         order.setRequestId(RandomStringUtils.randomAlphanumeric(20));
         
         return order;
@@ -58,6 +64,25 @@ public class ModelFixture {
     private static String buildRandomName() {
 
         return RandomStringUtils.randomAlphanumeric(10);
+    }
+
+    private static Host buildHost() {
+
+        var host = new Host();
+        host.setIp("server01");
+        host.setUsername("user");
+        host.setPassword("s3cr3t");
+
+        return host;
+    }
+
+    private static HostSetup buildHostSetup() {
+
+        var hostSetup = new HostSetup();
+        hostSetup.setTag("tag");
+        hostSetup.setHosts(Collections.singletonList(buildHost()));
+
+        return hostSetup;
     }
 
 }

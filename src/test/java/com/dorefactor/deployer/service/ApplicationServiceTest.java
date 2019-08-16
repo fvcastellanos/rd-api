@@ -13,9 +13,9 @@ import java.util.Collections;
 import java.util.Optional;
 
 import com.dorefactor.deployer.dao.ApplicationDao;
-import com.dorefactor.deployer.dao.model.Application;
+import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.fixture.ModelFixture;
-import com.dorefactor.deployer.service.model.ServiceError;
+import com.dorefactor.deployer.domain.error.ServiceError;
 
 import org.junit.Before;
 import org.junit.Test;

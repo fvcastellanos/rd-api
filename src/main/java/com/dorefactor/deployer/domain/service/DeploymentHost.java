@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.service.model;
+package com.dorefactor.deployer.domain.service;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,9 +11,8 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class DeploymentRequest {
+public class DeploymentHost {
 
-    private String templateName;
-    private String version;
+    private String tag;
     private List<String> hosts;
 }

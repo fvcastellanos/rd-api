@@ -1,9 +1,9 @@
 package com.dorefactor.deployer.service;
 
 import com.dorefactor.deployer.dao.DeploymentTemplateDao;
-import com.dorefactor.deployer.dao.model.DeploymentTemplate;
+import com.dorefactor.deployer.domain.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
-import com.dorefactor.deployer.service.model.ServiceError;
+import com.dorefactor.deployer.domain.error.ServiceError;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -33,7 +33,7 @@ public class DeploymentTemplateServiceTest {
 
         deploymentTemplateService = new DeploymentTemplateService(deploymentTemplateDao);
 
-        deploymentTemplate = ModelFixture.builDeploymentTemplate();
+        deploymentTemplate = ModelFixture.buildDeploymentTemplate();
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.dao.model;
+package com.dorefactor.deployer.domain.model.docker;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public abstract class ApplicationSetup {
+public class Image {
 
-    private ApplicationType applicationType;
+    private String name;
+    private String tag;
 }

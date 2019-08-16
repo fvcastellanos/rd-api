@@ -2,7 +2,7 @@ package com.dorefactor.deployer.dao;
 
 import java.util.Optional;
 
-import com.dorefactor.deployer.dao.model.DeploymentOrder;
+import com.dorefactor.deployer.domain.model.DeploymentOrder;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;

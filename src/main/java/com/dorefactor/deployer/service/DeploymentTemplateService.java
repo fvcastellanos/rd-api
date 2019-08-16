@@ -3,9 +3,9 @@ package com.dorefactor.deployer.service;
 import java.util.List;
 
 import com.dorefactor.deployer.dao.DeploymentTemplateDao;
-import com.dorefactor.deployer.dao.model.DeploymentTemplate;
-import com.dorefactor.deployer.service.model.Error;
-import com.dorefactor.deployer.service.model.ServiceError;
+import com.dorefactor.deployer.domain.model.DeploymentTemplate;
+import com.dorefactor.deployer.domain.error.Error;
+import com.dorefactor.deployer.domain.error.ServiceError;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

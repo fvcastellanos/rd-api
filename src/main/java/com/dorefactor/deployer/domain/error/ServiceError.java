@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.service.model;
+package com.dorefactor.deployer.domain.error;
 
 public enum ServiceError implements Error {
     
@@ -8,13 +8,11 @@ public enum ServiceError implements Error {
     DEPLOYMENT_TEMPLATE_NOT_FOUND("Deployment template name not found"),
 
     ERROR_PROCESSING("Can't process operation")
-
-
     ;
 
     private String message;
 
-    private ServiceError(String message) {
+    ServiceError(String message) {
         this.message = message;
     }
 
