@@ -1,29 +1,29 @@
 package com.dorefactor.deployer.service;
 
+import com.dorefactor.deployer.dao.DeploymentOrderDao;
+import com.dorefactor.deployer.dao.DeploymentTemplateDao;
+import com.dorefactor.deployer.domain.error.Error;
+import com.dorefactor.deployer.domain.error.ServiceError;
+import com.dorefactor.deployer.domain.model.DeploymentOrder;
 import com.dorefactor.deployer.domain.model.DeploymentTemplate;
 import com.dorefactor.deployer.domain.model.Host;
 import com.dorefactor.deployer.domain.model.HostSetup;
 import com.dorefactor.deployer.domain.service.DeploymentHost;
-import com.dorefactor.deployer.message.DeploymentOrderProducer;
 import com.dorefactor.deployer.domain.service.DeploymentRequest;
-import com.dorefactor.deployer.domain.error.Error;
-import com.dorefactor.deployer.domain.error.ServiceError;
+import com.dorefactor.deployer.message.DeploymentOrderProducer;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.slf4j.LoggerFactory;
-
 import io.vavr.control.Either;
-
-import com.dorefactor.deployer.dao.DeploymentOrderDao;
-import com.dorefactor.deployer.dao.DeploymentTemplateDao;
-import com.dorefactor.deployer.domain.model.DeploymentOrder;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 public class DeploymentService {
 
@@ -86,9 +86,31 @@ public class DeploymentService {
         deploymentOrder.setVersion(deploymentRequest.getVersion());
         deploymentOrder.setCreatedAt(LocalDateTime.now()); // check if localDateTime is a good idea
         deploymentOrder.setApplication(deploymentTemplate.getApplication());
-//        deploymentOrder.setHostsSetup(buildHostSetupList(deploymentRequest.getHosts(), deploymentTemplate.getHostsSetup()));
+        deploymentOrder.setHostsSetup(buildHostSetupList(deploymentRequest.getDeploymentHosts(), deploymentTemplate.getHostsSetup()));
 
         return deploymentOrder;
+    }
+
+    static List<HostSetup> buildHostSetupList(List<DeploymentHost> hosts, List<HostSetup> hostsSetup) {
+
+        if (isNull(hosts) || hosts.isEmpty()) {
+
+            return hostsSetup;
+        }
+
+        var matchingDeploymentHosts = getMatchingHostsByTag(hosts, hostsSetup);
+
+        List<HostSetup> hostSetupList = Lists.newArrayList();
+
+        matchingDeploymentHosts.forEach(host -> {
+            var setup = new HostSetup();
+            setup.setTag(host.getTag());
+            setup.setHosts(buildHostList(host.getTag(), host.getHosts(), hostsSetup));
+
+            hostSetupList.add(setup);
+        });
+
+        return hostSetupList;
     }
 
     private static List<DeploymentHost> getMatchingHostsByTag(List<DeploymentHost> hosts, List<HostSetup> hostsSetup) {
@@ -100,51 +122,22 @@ public class DeploymentService {
         ).collect(Collectors.toList());
     }
 
-    private static List<Host> findHostsByTagAndName(String tag, String name, List<HostSetup> hostSetups) {
+    private static Optional<Host> findHostsByTagAndName(String tag, String name, List<HostSetup> hostsSetup) {
 
-        return hostSetups.stream().filter(hostSetup -> hostSetup.getTag().equals(tag))
+        return hostsSetup.stream().filter(hostSetup -> hostSetup.getTag().equals(tag))
                 .flatMap(hostSetup -> hostSetup.getHosts().stream())
                 .filter(host -> host.getIp().equals(name))
-                .collect(Collectors.toList());
+                .findFirst();
     }
 
-    private static List<HostSetup> buildHostSetupList(List<DeploymentHost> hosts, List<HostSetup> hostsSetup) {
+    private static List<Host> buildHostList(String tag, List<String> hostNameList, List<HostSetup> hostsSetup) {
 
-        var matchingDeploymentHosts = getMatchingHostsByTag(hosts, hostsSetup);
-
-        List<HostSetup> hostSetupList = Lists.newArrayList();
-
-        matchingDeploymentHosts.forEach(host -> {
-            var setup = new HostSetup();
-            setup.setTag();
+        List<Host> hostList = Lists.newArrayList();
+        hostNameList.forEach(hostName -> {
+            findHostsByTagAndName(tag, hostName, hostsSetup)
+                    .ifPresent(h -> hostList.add(h));
         });
 
-        matchingHostsSetup.forEach(hostSetup -> {
-            var setup = new HostSetup();
-            setup.setTag(hostSetup.getTag());
-            setup.setHosts(findHostsByTagAndName(hostSetup.getTag(), ));
-        });
-
-        hosts.stream().filter(host -> hostsSetup.stream().map(HostSetup::getTag)
-                    .anyMatch(tag -> host.equals(tag)))
-                .collect(Collectors.toList());
-
-//        hosts.stream()
-
-        hostsSetup.stream().filter(hostSetup -> {
-
-            return true;
-
-        }).collect(Collectors.toList());
-
-        return null;
-    }
-
-
-
-    private static List<Host> getHostsThatMatchHostName(String hostName, List<Host> hosts) {
-
-        return hosts.stream().filter(host -> hostName.equals(host.getIp()))
-                .collect(Collectors.toList());
+        return hostList;
     }
 }

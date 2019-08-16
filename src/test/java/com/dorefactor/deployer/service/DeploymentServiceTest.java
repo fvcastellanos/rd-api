@@ -4,9 +4,12 @@ import com.dorefactor.deployer.dao.DeploymentOrderDao;
 import com.dorefactor.deployer.dao.DeploymentTemplateDao;
 import com.dorefactor.deployer.domain.error.ServiceError;
 import com.dorefactor.deployer.domain.model.DeploymentOrder;
+import com.dorefactor.deployer.domain.model.HostSetup;
+import com.dorefactor.deployer.domain.service.DeploymentHost;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.dorefactor.deployer.fixture.ServiceModelFixture;
 import com.dorefactor.deployer.message.DeploymentOrderProducer;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Before;
@@ -14,6 +17,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +47,6 @@ public class DeploymentServiceTest {
     private DeploymentService deploymentService;
 
     private String templateName = "test-template";
-
 
     @Before
     public void setup() {
@@ -110,6 +114,45 @@ public class DeploymentServiceTest {
         verifyNoMoreInteractions(deploymentTemplateDao, deploymentOrderDao, deploymentOrderProducer);
     }
 
+    @Test
+    public void testDeploymentHostsMapToHostSetupList() {
+
+        var deploymentHostList = buildDeploymentHosts();
+        var hostSetupList = buildHostsSetup();
+
+        var hostSetup = ModelFixture.buildHostSetup("qa");
+        hostSetup.setHosts(List.of(ModelFixture.buildHost("server01")));
+
+        var otherHostSetup = ModelFixture.buildHostSetup("stg");
+        otherHostSetup.setHosts(List.of(ModelFixture.buildHost("server02"), ModelFixture.buildHost("server03")));
+
+        var list = DeploymentService.buildHostSetupList(deploymentHostList, hostSetupList);
+
+        assertThat(list).isNotEmpty()
+                .containsExactlyInAnyOrder(hostSetup, otherHostSetup);
+    }
+
+    @Test
+    public void testWhenDeploymentHostIsEmptyReturnTemplateHostSetup() {
+
+        List<DeploymentHost> deploymentHostList = Collections.emptyList();
+        var hostSetupList = buildHostsSetup();
+
+        var list = DeploymentService.buildHostSetupList(deploymentHostList, hostSetupList);
+
+        assertThat(list).isNotEmpty().isSameAs(hostSetupList);
+    }
+
+    @Test
+    public void testWhenDeploymentHostIsNullReturnTemplateHostSetup() {
+
+        var hostSetupList = buildHostsSetup();
+
+        var list = DeploymentService.buildHostSetupList(null, hostSetupList);
+
+        assertThat(list).isNotEmpty().isSameAs(hostSetupList);
+    }
+
     // ------------------------------------------------------------------------------------------------------
 
     private void expectDeploymentTemplate() {
@@ -140,5 +183,39 @@ public class DeploymentServiceTest {
 
         doThrow(new RuntimeException("expected exception"))
                 .when(deploymentOrderProducer).produce(anyString());
+    }
+
+    private List<DeploymentHost> buildDeploymentHosts() {
+
+        List<DeploymentHost> deploymentHosts = Lists.newArrayList();
+
+        var host = ServiceModelFixture.buildDeploymentHost("qa");
+        host.setHosts(List.of("server01", "server02", "server03"));
+
+        deploymentHosts.add(host);
+
+        host = ServiceModelFixture.buildDeploymentHost("stg");
+        host.setHosts(List.of("server01", "server02", "server03"));
+
+        deploymentHosts.add(host);
+
+        return deploymentHosts;
+    }
+
+    private List<HostSetup> buildHostsSetup() {
+
+        List<HostSetup> hostsSetup = Lists.newArrayList();
+
+        var hostSetup = ModelFixture.buildHostSetup("qa");
+        hostSetup.setHosts(List.of(ModelFixture.buildHost("server01"), ModelFixture.buildHost("server05")));
+
+        hostsSetup.add(hostSetup);
+
+        hostSetup = ModelFixture.buildHostSetup("stg");
+        hostSetup.setHosts(List.of(ModelFixture.buildHost("server02"), ModelFixture.buildHost("server03")));
+
+        hostsSetup.add(hostSetup);
+
+        return hostsSetup;
     }
 }

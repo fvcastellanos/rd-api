@@ -18,12 +18,17 @@ public class ServiceModelFixture {
         return request;
     }
 
-    private static DeploymentHost buildDeploymentHost() {
+    public static DeploymentHost buildDeploymentHost(String tag) {
 
         var host = new DeploymentHost();
-        host.setTag("tag");
+        host.setTag(tag);
         host.setHosts(Collections.singletonList("server01"));
 
         return host;
+    }
+
+    public static DeploymentHost buildDeploymentHost() {
+
+        return buildDeploymentHost("tag");
     }
 }

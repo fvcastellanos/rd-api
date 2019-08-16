@@ -59,30 +59,39 @@ public class ModelFixture {
         return order;
     }
 
-    // -----------------------------------------------------------------------------
-
-    private static String buildRandomName() {
-
-        return RandomStringUtils.randomAlphanumeric(10);
-    }
-
-    private static Host buildHost() {
+    public static Host buildHost(String ip) {
 
         var host = new Host();
-        host.setIp("server01");
+        host.setIp(ip);
         host.setUsername("user");
         host.setPassword("s3cr3t");
 
         return host;
     }
 
-    private static HostSetup buildHostSetup() {
+    public static Host buildHost() {
+
+        return buildHost("server01");
+    }
+
+    public static HostSetup buildHostSetup() {
+
+        return buildHostSetup("tag");
+    }
+
+    public static HostSetup buildHostSetup(String tag) {
 
         var hostSetup = new HostSetup();
-        hostSetup.setTag("tag");
+        hostSetup.setTag(tag);
         hostSetup.setHosts(Collections.singletonList(buildHost()));
 
         return hostSetup;
     }
 
+    // -----------------------------------------------------------------------------
+
+    private static String buildRandomName() {
+
+        return RandomStringUtils.randomAlphanumeric(10);
+    }
 }
