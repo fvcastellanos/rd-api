@@ -1,4 +1,4 @@
-package com.dorefactor.deployer.domain.web.response;
+package com.dorefactor.deployer.domain.web.view;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +8,9 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 
 @Getter
 @Setter
-public class BaseResponse {
+public class BaseResponseView {
 
-    private RequestData request;
+    private RequestDataView request;
 
     @Override
     public String toString() {

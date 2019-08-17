@@ -24,6 +24,6 @@ public class DeploymentOrderRabbitMqProducerTest extends BaseProducerIT {
         deploymentOrderProducer.produce(message);
 
         await().atMost(5, TimeUnit.SECONDS)
-                .untilAsserted(() -> assertThat(rabbitListenerFixture.getLastMessage()).isEqualTo(message));
+                .untilAsserted(() -> assertThat(RabbitListenerFixture.getLastMessage()).isEqualTo(message));
     }
 }

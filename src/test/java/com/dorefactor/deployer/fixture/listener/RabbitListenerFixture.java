@@ -8,21 +8,18 @@ public class RabbitListenerFixture {
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitListenerFixture.class);
 
-    private String message;
-
-    public RabbitListenerFixture() {
-        this.message = "N/A";
-    }
+    private static String message = "N/A";
 
     @RabbitListener(queues = "com.dorefactor.deploy.command")
     public void receiveMessage(String message) {
 
         logger.info("message received: {}", message);
-        this.message = message;
+        RabbitListenerFixture.message = message;
     }
 
-    public String getLastMessage() {
+    public static String getLastMessage() {
 
+        logger.info("last message: {}", message);
         return message;
     }
 

@@ -1,6 +1,6 @@
-package com.dorefactor.deployer.web.controllers.configuration;
+package com.dorefactor.deployer.web.controller.configuration;
 
-import com.dorefactor.deployer.web.controllers.AbstractController;
+import com.dorefactor.deployer.web.controller.AbstractController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/configuration")
