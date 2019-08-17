@@ -9,6 +9,5 @@ public class ApplicationView {
 
     private String id;
     private String name;
-
-    
+    private ApplicationSetupView applicationSetup;
 }

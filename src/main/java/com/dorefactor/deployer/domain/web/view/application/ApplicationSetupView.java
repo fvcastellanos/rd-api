@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = DockerApplicationSetupView.class)
 })
