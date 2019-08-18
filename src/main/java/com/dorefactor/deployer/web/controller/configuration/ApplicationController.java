@@ -1,8 +1,12 @@
 package com.dorefactor.deployer.web.controller.configuration;
 
 import com.dorefactor.deployer.domain.model.Application;
+import com.dorefactor.deployer.domain.model.docker.DockerApplicationSetup;
 import com.dorefactor.deployer.domain.web.view.RequestDataView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationResponseView;
+import com.dorefactor.deployer.domain.web.view.application.ApplicationSetupView;
+import com.dorefactor.deployer.domain.web.view.application.ApplicationView;
+import com.dorefactor.deployer.domain.web.view.application.docker.DockerApplicationSetupView;
 import com.dorefactor.deployer.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,5 +57,20 @@ public class ApplicationController extends AbstractConfigurationController {
         response.setApplications(applications);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private ApplicationView buildApplicationView(Application application) {
+        
+        
+
+        return null;
+    }
+
+    private DockerApplicationSetupView buildDockerApplicationSetupView(DockerApplicationSetup dockerApplicationSetup) {
+
+        var view = new DockerApplicationSetupView();
+        view.setType(dockerApplicationSetup.getApplicationType().name());
+
+        return view;
     }
 }
