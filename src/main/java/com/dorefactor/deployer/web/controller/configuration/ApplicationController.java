@@ -8,6 +8,7 @@ import com.dorefactor.deployer.domain.web.view.application.ApplicationSetupView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationView;
 import com.dorefactor.deployer.domain.web.view.application.docker.DockerApplicationSetupView;
 import com.dorefactor.deployer.service.ApplicationService;
+import com.dorefactor.deployer.web.converter.ApplicationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ApplicationController extends AbstractConfigurationController {
@@ -43,7 +45,12 @@ public class ApplicationController extends AbstractConfigurationController {
     }
 
     @PostMapping("/applications")
-    public ResponseEntity newApplication() {
+    public ResponseEntity newApplication(ApplicationView applicationView) {
+
+        var requestData = buildRequestData();
+
+        // add validators
+
 
         return null;
     }
@@ -52,25 +59,14 @@ public class ApplicationController extends AbstractConfigurationController {
 
     private ResponseEntity<ApplicationResponseView> buildApplicationResponse(RequestDataView requestDataView, List<Application> applications) {
 
+        var applicationViewList = applications.stream()
+                .map(ApplicationConverter::buildApplicationView)
+                .collect(Collectors.toList());
+
         var response = new ApplicationResponseView();
         response.setRequest(requestDataView);
-        response.setApplications(applications);
+        response.setApplications(applicationViewList);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    private ApplicationView buildApplicationView(Application application) {
-        
-        
-
-        return null;
-    }
-
-    private DockerApplicationSetupView buildDockerApplicationSetupView(DockerApplicationSetup dockerApplicationSetup) {
-
-        var view = new DockerApplicationSetupView();
-        view.setType(dockerApplicationSetup.getApplicationType().name());
-
-        return view;
     }
 }

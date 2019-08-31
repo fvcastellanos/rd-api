@@ -28,7 +28,7 @@ public class DeploymentTemplateService {
         
         try {
 
-            logger.info("creating new deployment template: ", deploymentTemplate);
+            logger.info("creating new deployment template: {}", deploymentTemplate);
 
             var deploymentTemplateHolder = deploymentTemplateDao.getByName(deploymentTemplate.getName());
 
@@ -52,7 +52,7 @@ public class DeploymentTemplateService {
 
     public Either<Error, List<DeploymentTemplate>> getAll() {
 
-        return Try.of(() -> deploymentTemplateDao.getAll())
+        return Try.of(deploymentTemplateDao::getAll)
             .onSuccess(templates -> logger.info("deployment templates retrieved successfully"))
             .onFailure(ex -> logger.error("can't get deployment templates, ", ex))
             .toEither()

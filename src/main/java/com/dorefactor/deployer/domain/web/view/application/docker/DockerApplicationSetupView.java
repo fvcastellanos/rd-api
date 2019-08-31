@@ -1,6 +1,7 @@
 package com.dorefactor.deployer.domain.web.view.application.docker;
 
 import com.dorefactor.deployer.domain.web.view.application.ApplicationSetupView;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class DockerApplicationSetupView extends ApplicationSetupView {
 
     private RegistryView registryView;

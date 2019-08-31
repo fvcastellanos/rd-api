@@ -3,6 +3,7 @@ package com.dorefactor.deployer.domain.web.view.application;
 import com.dorefactor.deployer.domain.web.view.application.docker.DockerApplicationSetupView;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
