@@ -12,8 +12,8 @@ import com.dorefactor.deployer.message.DeploymentOrderProducer;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-public class DeploymentServiceTest {
+class DeploymentServiceTest {
 
     private Gson gson;
 
@@ -48,8 +48,8 @@ public class DeploymentServiceTest {
 
     private String templateName = "test-template";
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -58,7 +58,7 @@ public class DeploymentServiceTest {
     }
 
     @Test
-    public void testDeploymentRequestIsQueued() {
+    void testDeploymentRequestIsQueued() {
 
         var request = ServiceModelFixture.buildDeploymentRequest(templateName);
 
@@ -78,7 +78,7 @@ public class DeploymentServiceTest {
     }
 
     @Test
-    public void testWhenDeploymentTemplateNotFoundReturnError() {
+    void testWhenDeploymentTemplateNotFoundReturnError() {
 
         var deploymentRequest = ServiceModelFixture.buildDeploymentRequest(templateName);
 
@@ -94,7 +94,7 @@ public class DeploymentServiceTest {
     }
 
     @Test
-    public void testWhenExceptionIsThrownReturnError() {
+    void testWhenExceptionIsThrownReturnError() {
 
         var deploymentRequest = ServiceModelFixture.buildDeploymentRequest(templateName);
 
@@ -115,7 +115,7 @@ public class DeploymentServiceTest {
     }
 
     @Test
-    public void testDeploymentHostsMapToHostSetupList() {
+    void testDeploymentHostsMapToHostSetupList() {
 
         var deploymentHostList = buildDeploymentHosts();
         var hostSetupList = buildHostsSetup();
@@ -129,11 +129,11 @@ public class DeploymentServiceTest {
         var list = DeploymentService.buildHostSetupList(deploymentHostList, hostSetupList);
 
         assertThat(list).isNotEmpty()
-                .containsExactlyInAnyOrder(hostSetup, otherHostSetup);
+                        .containsExactlyInAnyOrder(hostSetup, otherHostSetup);
     }
 
     @Test
-    public void testWhenDeploymentHostIsEmptyReturnTemplateHostSetup() {
+    void testWhenDeploymentHostIsEmptyReturnTemplateHostSetup() {
 
         List<DeploymentHost> deploymentHostList = Collections.emptyList();
         var hostSetupList = buildHostsSetup();
@@ -144,7 +144,7 @@ public class DeploymentServiceTest {
     }
 
     @Test
-    public void testWhenDeploymentHostIsNullReturnTemplateHostSetup() {
+    void testWhenDeploymentHostIsNullReturnTemplateHostSetup() {
 
         var hostSetupList = buildHostsSetup();
 

@@ -1,22 +1,21 @@
 package com.dorefactor.deployer.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
-
 import org.bson.types.ObjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ApplicationMongoDaoTest extends BaseDaoIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ApplicationMongoDaoTest extends BaseDaoIT {
 
     @Autowired
     private ApplicationMongoDao applicationDao;
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
 
         var applications = Lists.newArrayList(saveRandomApplication(), saveRandomApplication());
 
@@ -26,18 +25,18 @@ public class ApplicationMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testGetByNameWithExistingApp() {
-        
+    void testGetByNameWithExistingApp() {
+
         var application = saveRandomApplication();
 
         var appHolder = applicationDao.getByName(application.getName());
 
         assertThat(appHolder).get()
-            .isEqualTo(application);
+                             .isEqualTo(application);
     }
 
     @Test
-    public void testGetByNameNonExistingApp() {
+    void testGetByNameNonExistingApp() {
 
         var appHolder = applicationDao.getByName("not-existing-app");
 
@@ -45,7 +44,7 @@ public class ApplicationMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
 
         var application = ModelFixture.buildDockerApplication();
 

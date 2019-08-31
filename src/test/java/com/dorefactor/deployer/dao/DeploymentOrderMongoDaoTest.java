@@ -1,21 +1,20 @@
 package com.dorefactor.deployer.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.dorefactor.deployer.domain.model.DeploymentOrder;
 import com.dorefactor.deployer.fixture.ModelFixture;
-
 import org.bson.types.ObjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class DeploymentOrderMongoDaoTest extends BaseDaoIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DeploymentOrderMongoDaoTest extends BaseDaoIT {
 
     @Autowired
     private DeploymentOrderDao deploymentOrderDao;
 
     @Test
-    public void testSave() {
+    void testSave() {
 
         var order = ModelFixture.buildDeploymentOrder();
         var storedOrder = deploymentOrderDao.save(order);
@@ -25,18 +24,18 @@ public class DeploymentOrderMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testGetByRequestId() {
+    void testGetByRequestId() {
 
         var order = saveRandomDeploymentOrder();
 
         var storedOrder = deploymentOrderDao.getByRequestId(order.getRequestId());
 
         assertThat(storedOrder).get()
-            .isEqualTo(order);
+                               .isEqualTo(order);
     }
 
     @Test
-    public void testGetByNonExistingRequestId() {
+    void testGetByNonExistingRequestId() {
 
         var order = deploymentOrderDao.getByRequestId("not-existing-request-id");
 
