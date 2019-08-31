@@ -1,22 +1,21 @@
 package com.dorefactor.deployer.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.dorefactor.deployer.domain.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.google.common.collect.Lists;
-
 import org.bson.types.ObjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
-    
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
+
     @Autowired
     private DeploymentTemplateDao deploymentTemplateDao;
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
 
         var templates = Lists.newArrayList(saveRandomDeploymentTemplate(), saveRandomDeploymentTemplate());
 
@@ -26,7 +25,7 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
 
         var deploymentTemplate = ModelFixture.buildDeploymentTemplate();
         var storedTemplate = deploymentTemplateDao.save(deploymentTemplate);
@@ -36,17 +35,17 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testGetByName() {
+    void testGetByName() {
 
         var storedTemplate = saveRandomDeploymentTemplate();
         var expectedTemplate = deploymentTemplateDao.getByName(storedTemplate.getName());
 
         assertThat(expectedTemplate).get()
-            .isEqualTo(storedTemplate);
+                                    .isEqualTo(storedTemplate);
     }
 
     @Test
-    public void testGetByNameNotFound() {
+    void testGetByNameNotFound() {
 
         var template = deploymentTemplateDao.getByName("something");
 
@@ -54,17 +53,17 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
     }
 
     @Test
-    public void testGetById() {
+    void testGetById() {
 
         var storedTemplate = saveRandomDeploymentTemplate();
         var expectedTemplate = deploymentTemplateDao.getById(storedTemplate.getId());
 
         assertThat(expectedTemplate).get()
-            .isEqualTo(storedTemplate);
+                                    .isEqualTo(storedTemplate);
     }
 
     @Test
-    public void testGetByIdNotFound() {
+    void testGetByIdNotFound() {
 
         var id = ModelFixture.buildRandomObjectId();
         var template = deploymentTemplateDao.getById(id);
@@ -78,7 +77,7 @@ public class DeploymentTemplateMongoDaoTest extends BaseDaoIT {
 
         var template = ModelFixture.buildDeploymentTemplate();
 
-        return mongoTemplate.save(template);        
+        return mongoTemplate.save(template);
     }
 
     private DeploymentTemplate getById(ObjectId id) {

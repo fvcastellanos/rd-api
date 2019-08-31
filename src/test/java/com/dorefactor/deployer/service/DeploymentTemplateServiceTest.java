@@ -1,11 +1,11 @@
 package com.dorefactor.deployer.service;
 
 import com.dorefactor.deployer.dao.DeploymentTemplateDao;
+import com.dorefactor.deployer.domain.error.ServiceError;
 import com.dorefactor.deployer.domain.model.DeploymentTemplate;
 import com.dorefactor.deployer.fixture.ModelFixture;
-import com.dorefactor.deployer.domain.error.ServiceError;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-public class DeploymentTemplateServiceTest {
+class DeploymentTemplateServiceTest {
 
     @Mock
     private DeploymentTemplateDao deploymentTemplateDao;
@@ -26,8 +26,8 @@ public class DeploymentTemplateServiceTest {
 
     private DeploymentTemplate deploymentTemplate;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -37,12 +37,12 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testAddDeploymentTemplate() {
+    void testAddDeploymentTemplate() {
 
         expectNoExistingDeploymentTemplate();
 
         doReturn(deploymentTemplate)
-            .when(deploymentTemplateDao).save(deploymentTemplate);
+                .when(deploymentTemplateDao).save(deploymentTemplate);
 
         var result = deploymentTemplateService.add(deploymentTemplate);
 
@@ -56,7 +56,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testWhenAddDeploymentTemplateAndAlreadyExists() {
+    void testWhenAddDeploymentTemplateAndAlreadyExists() {
 
         expectExistingDeploymentTemplate();
 
@@ -71,7 +71,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testWhenAddDeploymentTemplateAnExceptionIsThrown() {
+    void testWhenAddDeploymentTemplateAnExceptionIsThrown() {
 
         expectException();
 
@@ -86,7 +86,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testGetByName() {
+    void testGetByName() {
 
         expectExistingDeploymentTemplate();
         var name = deploymentTemplate.getName();
@@ -102,7 +102,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testGetByNameNotFound() {
+    void testGetByNameNotFound() {
 
         expectNoExistingDeploymentTemplate();
 
@@ -119,7 +119,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testGetByNameThrownException() {
+    void testGetByNameThrownException() {
 
         expectException();
         var name = deploymentTemplate.getName();
@@ -135,7 +135,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
 
         doReturn(Collections.singletonList(deploymentTemplate))
                 .when(deploymentTemplateDao).getAll();
@@ -151,7 +151,7 @@ public class DeploymentTemplateServiceTest {
     }
 
     @Test
-    public void testGetAllThrowsException() {
+    void testGetAllThrowsException() {
 
         doThrow(new RuntimeException("expected exception"))
                 .when(deploymentTemplateDao).getAll();
@@ -171,7 +171,7 @@ public class DeploymentTemplateServiceTest {
     private void expectNoExistingDeploymentTemplate() {
 
         doReturn(Optional.empty())
-            .when(deploymentTemplateDao).getByName(deploymentTemplate.getName());
+                .when(deploymentTemplateDao).getByName(deploymentTemplate.getName());
     }
 
     private void expectExistingDeploymentTemplate() {
