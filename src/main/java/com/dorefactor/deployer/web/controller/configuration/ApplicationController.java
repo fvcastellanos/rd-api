@@ -1,12 +1,11 @@
 package com.dorefactor.deployer.web.controller.configuration;
 
 import com.dorefactor.deployer.domain.model.Application;
-import com.dorefactor.deployer.domain.model.docker.DockerApplicationSetup;
+import com.dorefactor.deployer.domain.web.view.HrefView;
 import com.dorefactor.deployer.domain.web.view.RequestDataView;
-import com.dorefactor.deployer.domain.web.view.application.ApplicationResponseView;
-import com.dorefactor.deployer.domain.web.view.application.ApplicationSetupView;
+import com.dorefactor.deployer.domain.web.view.application.ApplicationListResponseView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationView;
-import com.dorefactor.deployer.domain.web.view.application.docker.DockerApplicationSetupView;
+import com.dorefactor.deployer.domain.web.view.application.NewApplicationResponseView;
 import com.dorefactor.deployer.service.ApplicationService;
 import com.dorefactor.deployer.web.converter.ApplicationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class ApplicationController extends AbstractConfigurationController {
             return buildAppErrorResponse(requestData, result.getLeft());
         }
 
-        return buildApplicationResponse(requestData, result.get());
+        return buildApplicationsResponse(requestData, result.get());
     }
 
     @PostMapping("/applications")
@@ -51,21 +50,44 @@ public class ApplicationController extends AbstractConfigurationController {
 
         // add validators
 
+        var application = ApplicationConverter.buildApplication(applicationView);
 
-        return null;
+        var result = applicationService.addApplication(application);
+
+        if (result.isLeft()) {
+
+            return buildAppErrorResponse(requestData, result.getLeft());
+        }
+
+        return buildNewApplicationResponse(requestData, applicationView);
     }
 
     // ------------------------------------------------------------------------------------------
 
-    private ResponseEntity<ApplicationResponseView> buildApplicationResponse(RequestDataView requestDataView, List<Application> applications) {
+    private ResponseEntity<ApplicationListResponseView> buildApplicationsResponse(RequestDataView requestDataView, List<Application> applications) {
 
         var applicationViewList = applications.stream()
                 .map(ApplicationConverter::buildApplicationView)
                 .collect(Collectors.toList());
 
-        var response = new ApplicationResponseView();
+        var response = new ApplicationListResponseView();
         response.setRequest(requestDataView);
         response.setApplications(applicationViewList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(RequestDataView requestDataView, ApplicationView applicationView) {
+
+        var link =  "/configuration/applications/" + applicationView.getId();
+
+        var href = new HrefView();
+        href.setLink(link);
+
+        var response = new NewApplicationResponseView();
+        response.setRequest(requestDataView);
+        response.setApplication(applicationView);
+        response.setHref(href);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

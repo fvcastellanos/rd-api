@@ -11,7 +11,7 @@ import com.dorefactor.deployer.domain.web.view.application.docker.ImageView;
 import com.dorefactor.deployer.domain.web.view.application.docker.RegistryView;
 import com.google.common.collect.ImmutableMap;
 import org.bson.types.ObjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

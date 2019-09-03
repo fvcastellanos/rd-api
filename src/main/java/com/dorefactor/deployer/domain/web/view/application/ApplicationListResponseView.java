@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ApplicationResponseView extends BaseResponseView {
+public class ApplicationListResponseView extends BaseResponseView {
 
     private List<ApplicationView> applications;
 }
