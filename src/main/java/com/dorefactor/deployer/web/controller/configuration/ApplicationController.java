@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class ApplicationController extends AbstractConfigurationController {
     }
 
     @PostMapping("/applications")
-    public ResponseEntity newApplication(ApplicationView applicationView) {
+    public ResponseEntity newApplication(@RequestBody ApplicationView applicationView) {
 
         var requestData = buildRequestData();
 
@@ -79,7 +80,7 @@ public class ApplicationController extends AbstractConfigurationController {
 
     private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(RequestDataView requestDataView, ApplicationView applicationView) {
 
-        var link =  "/configuration/applications/" + applicationView.getId();
+        var link =  "/configuration/applications/" + applicationView.getName();
 
         var href = new HrefView();
         href.setLink(link);

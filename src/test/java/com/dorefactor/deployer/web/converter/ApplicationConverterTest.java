@@ -86,8 +86,8 @@ public class ApplicationConverterTest {
         dockerSetup.setExtraHosts(ImmutableMap.of("bar-host", "127.0.0.1"));
         dockerSetup.setPorts(ImmutableMap.of("8080", "8080"));
         dockerSetup.setVolumes(ImmutableMap.of("/volume", "/volume"));
-        dockerSetup.setImageView(dockerImage);
-        dockerSetup.setRegistryView(registry);
+        dockerSetup.setImage(dockerImage);
+        dockerSetup.setRegistry(registry);
 
         var view = new ApplicationView();
         view.setId("5d6ab70b4e9eb268b509019f");

@@ -11,5 +11,6 @@ public class ApplicationView {
 
     private String id;
     private String name;
+//    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "className")
     private ApplicationSetupView applicationSetup;
 }

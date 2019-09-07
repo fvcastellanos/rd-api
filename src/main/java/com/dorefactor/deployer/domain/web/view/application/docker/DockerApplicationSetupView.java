@@ -9,11 +9,12 @@ import java.util.Map;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class DockerApplicationSetupView extends ApplicationSetupView {
 
-    private RegistryView registryView;
-    private ImageView imageView;
+    private RegistryView registry;
+    private ImageView image;
+
     private Map<String, String> ports;
     private Map<String, String> environmentVariables;
     private Map<String, String> extraHosts;

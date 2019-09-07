@@ -15,6 +15,7 @@ import org.bson.types.ObjectId;
 
 import static com.dorefactor.deployer.domain.model.ApplicationType.DOCKER;
 import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class ApplicationConverter {
 
@@ -33,7 +34,10 @@ public class ApplicationConverter {
     public static Application buildApplication(ApplicationView applicationView) {
 
         var application = new Application();
-        application.setId(new ObjectId(applicationView.getId()));
+        if (isNotEmpty(applicationView.getId())) {
+            application.setId(new ObjectId(applicationView.getId()));
+        }
+
         application.setName(applicationView.getName());
 
         var applicationSetup = buildApplicationSetup(applicationView.getApplicationSetup());
@@ -67,8 +71,8 @@ public class ApplicationConverter {
 
         var view = new DockerApplicationSetupView();
         view.setType(dockerApplicationSetup.getApplicationType().name());
-        view.setImageView(imageView);
-        view.setRegistryView(registryView);
+        view.setImage(imageView);
+        view.setRegistry(registryView);
         view.setEnvironmentVariables(dockerApplicationSetup.getEnvironmentVariables());
         view.setExtraHosts(dockerApplicationSetup.getExtraHosts());
         view.setPorts(dockerApplicationSetup.getPorts());
@@ -116,7 +120,7 @@ public class ApplicationConverter {
             return null;
         }
 
-        if (applicationSetupView.getType().equals(DOCKER.name())) {
+        if (applicationSetupView.getType().equalsIgnoreCase(DOCKER.name())) {
 
             var view = (DockerApplicationSetupView) applicationSetupView;
             return buildDockerApplicationSetup(view);
@@ -127,11 +131,13 @@ public class ApplicationConverter {
 
     private static DockerApplicationSetup buildDockerApplicationSetup(DockerApplicationSetupView dockerApplicationSetupView) {
 
-        var image = buildImage(dockerApplicationSetupView.getImageView());
-        var registry = buildRegistry(dockerApplicationSetupView.getRegistryView());
+        var image = buildImage(dockerApplicationSetupView.getImage());
+        var registry = buildRegistry(dockerApplicationSetupView.getRegistry());
+
+        var appType = dockerApplicationSetupView.getType();
 
         var view = new DockerApplicationSetup();
-        view.setApplicationType(ApplicationType.valueOf(dockerApplicationSetupView.getType()));
+        view.setApplicationType(ApplicationType.valueOf(appType.toUpperCase()));
         view.setImage(image);
         view.setRegistry(registry);
         view.setEnvironmentVariables(dockerApplicationSetupView.getEnvironmentVariables());

@@ -1,17 +1,28 @@
 package com.dorefactor.deployer.web.controller;
 
+import com.dorefactor.deployer.fixture.ModelFixture;
 import com.dorefactor.deployer.web.BaseWebIT;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
-import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ApplicationControllerIT extends BaseWebIT {
+class ApplicationControllerIT extends BaseWebIT {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
 
-        assertNotNull(mockMvc);
-//        mockMvc.perform(MockMvcRequestBuilders.get("/configuration/applications"))
-//                .andExpect(status().isOk());
+//        newApplication();
+        mockMvc.perform(
+                get("/configuration/applications")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(status().isOk());
+    }
+
+    private void newApplication() {
+
+        var application = ModelFixture.buildDockerApplication();
+        mongoTemplate.insert(application);
     }
 }
