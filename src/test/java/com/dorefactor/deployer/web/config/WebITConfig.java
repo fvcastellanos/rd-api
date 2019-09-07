@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
+        MongoDbWebITConfig.class,
         DaoConfig.class,
         AmqpConfig.class,
         ProducerConfig.class,
