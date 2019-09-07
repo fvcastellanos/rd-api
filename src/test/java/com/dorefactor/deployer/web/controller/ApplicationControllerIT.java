@@ -16,14 +16,12 @@ class ApplicationControllerIT extends BaseWebIT {
     @Test
     void testGetApplications() throws Exception {
 
-        var app = newApplication();
-        var expectedView = ApplicationConverter.buildApplicationView(app);
-
-        String blah = asJson(expectedView);
+        newApplication();
 
         mockMvc.perform(get("/configuration/applications")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
     // ---------------------------------------------------------------------------------
