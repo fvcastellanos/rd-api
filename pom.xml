@@ -106,7 +106,7 @@
 			<version>${junit.vintage.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Embedded Mongo -->
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
