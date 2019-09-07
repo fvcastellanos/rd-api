@@ -1,28 +1,36 @@
 package com.dorefactor.deployer.web.controller;
 
+import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.fixture.ModelFixture;
 import com.dorefactor.deployer.web.BaseWebIT;
+import com.dorefactor.deployer.web.converter.ApplicationConverter;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ApplicationControllerIT extends BaseWebIT {
 
     @Test
-    void test() throws Exception {
+    void testGetApplications() throws Exception {
 
-//        newApplication();
-        mockMvc.perform(
-                get("/configuration/applications")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-        ).andExpect(status().isOk());
+        var app = newApplication();
+        var expectedView = ApplicationConverter.buildApplicationView(app);
+
+        String blah = asJson(expectedView);
+
+        mockMvc.perform(get("/configuration/applications")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 
-    private void newApplication() {
+    // ---------------------------------------------------------------------------------
+
+    private Application newApplication() {
 
         var application = ModelFixture.buildDockerApplication();
-        mongoTemplate.insert(application);
+        return mongoTemplate.insert(application);
     }
 }
