@@ -2,7 +2,6 @@ package com.dorefactor.deployer.web.controller.configuration;
 
 import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.domain.web.view.HrefView;
-import com.dorefactor.deployer.domain.web.view.RequestDataView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationListResponseView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationView;
 import com.dorefactor.deployer.domain.web.view.application.NewApplicationResponseView;
@@ -33,22 +32,19 @@ public class ApplicationController extends AbstractConfigurationController {
 
     @GetMapping("/applications")
     public ResponseEntity getApplications() {
-        var requestData = buildRequestData();
 
         var result = applicationService.getApplications();
 
         if (result.isLeft())  {
 
-            return buildAppErrorResponse(requestData, result.getLeft());
+            return buildAppErrorResponse(result.getLeft());
         }
 
-        return buildApplicationsResponse(requestData, result.get());
+        return buildApplicationsResponse(result.get());
     }
 
     @GetMapping("/applications/{name}")
     public ResponseEntity getApplication(@PathVariable("name") String name) {
-
-        var request = buildRequestData();
 
 //        var result = applicationService.get
         return null;
@@ -56,8 +52,6 @@ public class ApplicationController extends AbstractConfigurationController {
 
     @PostMapping("/applications")
     public ResponseEntity newApplication(@RequestBody ApplicationView applicationView) {
-
-        var requestData = buildRequestData();
 
         // add validators
 
@@ -67,28 +61,24 @@ public class ApplicationController extends AbstractConfigurationController {
 
         if (result.isLeft()) {
 
-            return buildAppErrorResponse(requestData, result.getLeft());
+            return buildAppErrorResponse(result.getLeft());
         }
 
-        return buildNewApplicationResponse(requestData, applicationView);
+        return buildNewApplicationResponse(applicationView);
     }
 
     // ------------------------------------------------------------------------------------------
 
-    private ResponseEntity<ApplicationListResponseView> buildApplicationsResponse(RequestDataView requestDataView, List<Application> applications) {
+    private ResponseEntity<List<ApplicationView>> buildApplicationsResponse(List<Application> applications) {
 
         var applicationViewList = applications.stream()
                 .map(ApplicationConverter::buildApplicationView)
                 .collect(Collectors.toList());
 
-        var response = new ApplicationListResponseView();
-        response.setRequest(requestDataView);
-        response.setApplications(applicationViewList);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(applicationViewList, HttpStatus.OK);
     }
 
-    private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(RequestDataView requestDataView, ApplicationView applicationView) {
+    private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(ApplicationView applicationView) {
 
         var link =  "/configuration/applications/" + applicationView.getName();
 
@@ -96,7 +86,6 @@ public class ApplicationController extends AbstractConfigurationController {
         href.setLink(link);
 
         var response = new NewApplicationResponseView();
-        response.setRequest(requestDataView);
         response.setApplication(applicationView);
         response.setHref(href);
 

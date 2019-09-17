@@ -2,6 +2,7 @@ package com.dorefactor.deployer.web;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import com.dorefactor.deployer.web.config.WebITConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,10 +23,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringJUnitWebConfig(classes = WebITConfig.class)
 public abstract class BaseWebIT {
 
-    private static final Gson gson = new GsonBuilder()
-            .serializeNulls()
-            .create();
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -37,12 +34,23 @@ public abstract class BaseWebIT {
     protected <T> String asJson(T object) throws Exception {
 
         return objectMapper.writeValueAsString(object);
-//        return gson.toJson(object);
     }
 
     protected String loadSample(String path) throws Exception {
 
         var file = ResourceUtils.getFile(path);
         return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-    }    
+    }
+
+    protected String loadSampleWithValues(String path, Map<String, String> values) throws Exception {
+
+        var sample = loadSample(path);
+
+        for (var entry : values.entrySet()) {
+
+            sample = sample.replaceAll(entry.getKey(), entry.getValue());
+        }
+
+        return sample;
+    }
 }

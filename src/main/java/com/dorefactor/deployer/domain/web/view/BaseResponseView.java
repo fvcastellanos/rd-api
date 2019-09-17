@@ -10,8 +10,6 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 @Setter
 public class BaseResponseView {
 
-    private RequestDataView request;
-
     @Override
     public String toString() {
         return reflectionToString(this, ToStringStyle.JSON_STYLE);

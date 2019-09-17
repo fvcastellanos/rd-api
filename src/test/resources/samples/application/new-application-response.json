@@ -1,7 +1,7 @@
-[
-  {
+{
+  "application" : {
     "id": #appId,
-    "name": "#appName",
+    "name": "test-app",
     "applicationSetup": {
       "type": "DOCKER",
       "registry": {
@@ -28,5 +28,8 @@
         "/data": "/data"
       }
     }
+  },
+  "href" : {
+    "link": "/configuration/applications/test-app"
   }
-]
+}
