@@ -1,5 +1,6 @@
 package com.dorefactor.deployer.web.controller.configuration;
 
+import com.dorefactor.deployer.domain.error.ServiceError;
 import com.dorefactor.deployer.domain.model.Application;
 import com.dorefactor.deployer.domain.web.view.HrefView;
 import com.dorefactor.deployer.domain.web.view.application.ApplicationListResponseView;
@@ -18,6 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.dorefactor.deployer.domain.error.ServiceError.APPLICATION_NOT_FOUND;
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
 
 @RestController
 public class ApplicationController extends AbstractConfigurationController {
@@ -46,8 +52,19 @@ public class ApplicationController extends AbstractConfigurationController {
     @GetMapping("/applications/{name}")
     public ResponseEntity getApplication(@PathVariable("name") String name) {
 
-//        var result = applicationService.get
-        return null;
+        var result = applicationService.getApplication(name);
+
+        if (result.isLeft()) {
+
+            var error = result.getLeft();
+
+            return Match(error).of(
+                    Case($(APPLICATION_NOT_FOUND), buildNotFoundResponse(error)),
+                    Case($(), buildAppErrorResponse(error))
+            );
+        }
+
+        return buildApplicationResponse(result.get());
     }
 
     @PostMapping("/applications")
@@ -64,7 +81,7 @@ public class ApplicationController extends AbstractConfigurationController {
             return buildAppErrorResponse(result.getLeft());
         }
 
-        return buildNewApplicationResponse(applicationView);
+        return buildNewApplicationResponse(result.get());
     }
 
     // ------------------------------------------------------------------------------------------
@@ -78,7 +95,16 @@ public class ApplicationController extends AbstractConfigurationController {
         return new ResponseEntity<>(applicationViewList, HttpStatus.OK);
     }
 
-    private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(ApplicationView applicationView) {
+    private ResponseEntity<ApplicationView> buildApplicationResponse(Application application) {
+
+        var view = ApplicationConverter.buildApplicationView(application);
+
+        return new ResponseEntity<>(view, HttpStatus.OK);
+    }
+
+    private ResponseEntity<NewApplicationResponseView> buildNewApplicationResponse(Application application) {
+
+        var applicationView = ApplicationConverter.buildApplicationView(application);
 
         var link =  "/configuration/applications/" + applicationView.getName();
 

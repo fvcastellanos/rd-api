@@ -121,6 +121,49 @@ class ApplicationServiceTest {
         verifyNoMoreInteractions(applicationDao);
     }
 
+    @Test
+    void testGetApplication() {
+
+        expectExistingApp();
+
+        var result = applicationService.getApplication("test-app");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isRight()).isTrue();
+
+        verify(applicationDao).getByName("test-app");
+        verifyNoMoreInteractions(applicationDao);
+    }
+
+    @Test
+    void testGetApplicationNotFound() {
+
+        expectAppNameNotFound();
+
+        var result = applicationService.getApplication("test-app");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isLeft()).isTrue();
+        assertThat(result.getLeft()).isEqualTo(ServiceError.APPLICATION_NOT_FOUND);
+
+        verify(applicationDao).getByName("test-app");
+        verifyNoMoreInteractions(applicationDao);
+    }
+
+    @Test
+    void testGetApplicationThrowsException() {
+
+        expectFindAppByNameThrowsException();
+
+        var result = applicationService.getApplication("test-app");
+
+        assertThat(result).isNotNull();
+        assertThat(result.isLeft()).isTrue();
+        assertThat(result.getLeft()).isEqualTo(ServiceError.ERROR_PROCESSING);
+
+        verify(applicationDao).getByName("test-app");
+        verifyNoMoreInteractions(applicationDao);
+    }
     // -----------------------------------------------------------------------------
 
     private void expectStoredApplication() {

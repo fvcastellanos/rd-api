@@ -1,0 +1,30 @@
+{
+  "id": "#appId",
+  "name": "test-app",
+  "applicationSetup": {
+    "type": "DOCKER",
+    "registry": {
+      "nonPublic": false,
+      "url": "dockerhub.com",
+      "username": "blah",
+      "password": "****"
+    },
+    "image": {
+      "name": "dorefactor/rd-api",
+      "tag": "1.1"
+    },
+    "ports": {
+      "80": "80",
+      "8080": "8080"
+    },
+    "environmentVariables": {
+      "foo": "var"
+    },
+    "extraHosts": {
+      "host": "10.10.10.10"
+    },
+    "volumes": {
+      "/data": "/data"
+    }
+  }
+}

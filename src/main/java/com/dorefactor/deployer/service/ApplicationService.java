@@ -1,6 +1,7 @@
 package com.dorefactor.deployer.service;
 
 import static com.dorefactor.deployer.domain.error.ServiceError.APPLICATION_ALREADY_EXITS;
+import static com.dorefactor.deployer.domain.error.ServiceError.APPLICATION_NOT_FOUND;
 import static com.dorefactor.deployer.domain.error.ServiceError.ERROR_PROCESSING;
 
 import java.util.List;
@@ -54,5 +55,26 @@ public class ApplicationService {
             .onFailure(ex -> logger.error("can't get applications: ", ex))
             .toEither()
             .mapLeft(ex -> ERROR_PROCESSING);
+    }
+
+    public Either<Error, Application> getApplication(String name) {
+
+        try {
+
+            var applicationHolder = applicationDao.getByName(name);
+
+            if (applicationHolder.isEmpty()) {
+
+                logger.warn("application: {} not found", name);
+                return Either.left(APPLICATION_NOT_FOUND);
+            }
+
+            logger.info("application: {} found", name);
+            return Either.right(applicationHolder.get());
+        } catch (Exception ex) {
+
+            logger.error("can't process operation: ", ex);
+            return Either.left(ERROR_PROCESSING);
+        }
     }
 }
