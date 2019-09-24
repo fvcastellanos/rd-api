@@ -1,5 +1,4 @@
 {
-  "id": "#appId",
   "name": "test-app",
   "applicationSetup": {
     "type": "DOCKER",

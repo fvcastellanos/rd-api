@@ -32,7 +32,7 @@ public class DeploymentOrderRabbitMqProducer implements DeploymentOrderProducer 
         logger.info("deployment request produced: {}", value);
         var message = buildMessage(exchange, queue, value);
 
-        rabbitOperations.convertAndSend(queue, exchange, value);
+        rabbitOperations.convertAndSend(exchange, queue, message);
     }
 
     private Message buildMessage(String exchange, String routingKey, String value) {

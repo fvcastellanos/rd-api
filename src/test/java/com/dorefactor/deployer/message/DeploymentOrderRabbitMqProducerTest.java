@@ -14,9 +14,6 @@ class DeploymentOrderRabbitMqProducerTest extends BaseProducerIT {
     @Autowired
     private DeploymentOrderProducer deploymentOrderProducer;
 
-    @Autowired
-    private RabbitListenerFixture rabbitListenerFixture;
-
     @Test
     void testDeploymentOrderRequestsAreQueued() {
 

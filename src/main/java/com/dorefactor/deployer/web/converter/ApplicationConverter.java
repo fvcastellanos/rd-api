@@ -22,7 +22,7 @@ public class ApplicationConverter {
     public static ApplicationView buildApplicationView(Application application) {
 
         var view = new ApplicationView();
-        view.setId(application.getId().toString());
+        view.setId(application.getId().toHexString());
         view.setName(application.getName());
 
         var applicationSetupView = buildApplicationSetupView(application.getApplicationSetup());

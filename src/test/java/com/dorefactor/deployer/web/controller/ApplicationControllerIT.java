@@ -68,9 +68,8 @@ class ApplicationControllerIT extends BaseWebIT {
 
         var appName = "test-app";
         var app = newApplication(appName);
-        var id = app.getId();
 
-        var content = getApplicationSample(id.toString());
+        var content = getApplicationSample();
 
         mockMvc.perform(get("/configuration/applications/" + appName)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -117,10 +116,9 @@ class ApplicationControllerIT extends BaseWebIT {
         return loadSample("classpath:samples/application/new-application-response.json");
     }
 
-    private String getApplicationSample(String id) throws Exception {
+    private String getApplicationSample() throws Exception {
 
-        return loadSampleWithValues("classpath:samples/application/existing-app.json",
-                ImmutableMap.of("#appId", id));
+        return loadSample("classpath:samples/application/existing-app.json");
     }
 
     private String getAppAlreadyExistsSample() throws Exception {
